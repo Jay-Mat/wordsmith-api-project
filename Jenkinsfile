@@ -9,7 +9,7 @@ pipeline {
         SONARSCANNER = "SonarScanner"
     }
 
-
+    stages {
         stage('Sonar Analysis') {
             environment {
                 scannerHome = tool "SonarScanner";
@@ -37,6 +37,6 @@ pipeline {
             }
         }
 
-
+    }
 
 }
