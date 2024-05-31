@@ -10,17 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Sonar Analysis') {
-            environment {
-                scannerHome = tool "SonarScanner";
-            }
-            steps {
-                withSonarQubeEnv('SonarScanner') {
-                sh "${scannerHome}/bin/sonar-scanner"         
-}
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'mvn package'
