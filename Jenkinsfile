@@ -10,14 +10,14 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage ('Build') {
             steps {
                 sh 'mvn package'
                 sh 'mvn clean install'
             }
         }
 
-        stage('Deployment') {
+        stage ('Deployment') {
             steps {
                 sh 'docker build -t word-smith-api'
                 sh 'docker tag word-smith-api:${BUILD_NUMBER} jaymath237/wordsmith-project-api'
