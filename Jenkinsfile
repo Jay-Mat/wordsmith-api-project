@@ -4,18 +4,33 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
+    tools {
+        maven "Maven"
+    }
     environment {
         CI = false //do not treat errors as warnings
         SONARSCANNER = "SonarScanner"
     }
 
+    
     stages {
-        stage ('Build') {
+        stage('Build') {
             steps {
-                sh 'mvn package'
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
+
+    stage('Sonar Analysis') {
+        environment {
+                scannerHome = tool "SonarScanner";
+            }
+            steps {
+                withSonarQubeEnv('SonarScanner') {
+                sh "${scannerHome}/bin/sonar-scanner"         
+}
+            }
+        }
+
 
         stage ('Deployment') {
             steps {
