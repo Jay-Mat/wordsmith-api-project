@@ -4,9 +4,7 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
-    tools {
-        maven = "Maven"
-    }
+
     environment {
         CI = false //do not treat errors as warnings
         SONARSCANNER = "SonarScanner"
