@@ -18,16 +18,16 @@ pipeline {
             }
         }
 
-    stage('Sonar Analysis') {
-        environment {
-                scannerHome = tool "SonarScanner";
+        stage('Sonar Analysis') {
+            environment {
+                    scannerHome = tool "SonarScanner";
+                }
+                steps {
+                    withSonarQubeEnv('SonarScanner') {
+                    sh "${scannerHome}/bin/sonar-scanner"         
             }
-            steps {
-                withSonarQubeEnv('SonarScanner') {
-                sh "${scannerHome}/bin/sonar-scanner"         
-}
+                }
             }
-        }
 
 
         stage ('Deployment') {
