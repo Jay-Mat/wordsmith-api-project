@@ -4,8 +4,8 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
-    tools {
-        Maven
+    tools{
+        maven 'Apache Maven 3.6.3'
     }
 
     environment {
