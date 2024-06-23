@@ -4,9 +4,6 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
-    tool {
-        Maven = Maven
-    }
 
     environment {
         CI = false //do not treat errors as warnings
