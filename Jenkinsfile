@@ -15,22 +15,25 @@ pipeline {
 
     
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Jay-Mat/wordsmith-api-project.git']])
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
 
-        stage('Sonar Analysis') {
-            environment {
-                    scannerHome = tool "SonarScanner";
-                }
-                steps {
-                    withSonarQubeEnv('SonarScanner') {
-                    sh "${scannerHome}/bin/sonar-scanner"         
-            }
-                }
-            }
+
+     stage('SonarQube Analysis') {
+    def mvn = tool 'Default Maven';
+    withSonarQubeEnv() {
+      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=wordsmith-api"
+    }
+  }
 
 
         stage('Deployment') {
