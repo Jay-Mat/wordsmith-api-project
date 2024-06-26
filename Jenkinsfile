@@ -28,12 +28,16 @@ pipeline {
         }
 
 
-     stage('SonarQube Analysis') {
-    def mvn = tool 'Maven';
-    withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=wordsmith-api"
-    }
-  }
+    stage('Sonar Analysis') {
+            environment {
+                scannerHome = tool "SonarScanner";
+            }
+            steps {
+                withSonarQubeEnv('SonarScanner') {
+                sh "${scannerHome}/bin/sonar-scanner"         
+}
+            }
+        }
 
 
         stage('Deployment') {
